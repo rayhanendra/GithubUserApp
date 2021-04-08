@@ -41,6 +41,7 @@ class DetailViewModel : ViewModel() {
                         val followers = responseObject.getInt("followers")
                         val following = responseObject.getInt("following")
                         val repository = responseObject.getInt("public_repos")
+
                         val user = User()
                         user.name = name
                         user.username = username
@@ -50,6 +51,8 @@ class DetailViewModel : ViewModel() {
                         user.followers = followers
                         user.following = following
                         user.repository = repository
+
+                        detailUser.postValue(user)
 
                     } catch (e: Exception) {
                         e.printStackTrace()
@@ -69,7 +72,8 @@ class DetailViewModel : ViewModel() {
             })
     }
 
-    fun getDetailUser(): LiveData<User> {
+    internal fun getDetailUser(): LiveData<User> {
+        Log.d("INI GETDETAILUSER", detailUser.toString())
         return detailUser
     }
 
