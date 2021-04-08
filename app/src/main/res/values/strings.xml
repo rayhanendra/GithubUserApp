@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Github User App</string>
+    <string name="followers">followers</string>
+    <string name="following">following</string>
+    <string name="repositories">Repositories</string>
+    <string name="location">location</string>
+    <string name="office">office</string>
+    <string name="search">Cari</string>
+    <string name="id_user">username</string>
+    <string name="insert_username">Masukkan Username</string>
+</resources>
