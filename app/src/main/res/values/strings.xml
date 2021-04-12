@@ -8,4 +8,6 @@
     <string name="search">Cari</string>
     <string name="id_user">username</string>
     <string name="insert_username">Masukkan Username</string>
+    <string name="tab_text_followers">Followers</string>
+    <string name="tab_text_following">Following</string>
 </resources>
