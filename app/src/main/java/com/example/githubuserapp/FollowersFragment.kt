@@ -17,19 +17,21 @@ class FollowersFragment: Fragment() {
     private lateinit var followersViewModel: FollowersViewModel
 
     companion object {
-        private val ARG_USERNAME = "username"
+        private val ARG_USERNAME = "EXTRA_USERNAME"
         fun newInstance(username: String?) =
-            FollowersFragment().apply{
-            val fragment = FollowersFragment()
-            val bundle = Bundle()
-            bundle.putString(ARG_USERNAME, username)
-            fragment.arguments = bundle
-            return fragment
-        }
+            FollowersFragment().apply {
+                val fragment = FollowersFragment()
+                val bundle = Bundle()
+                bundle.putString(ARG_USERNAME, username)
+                fragment.arguments = bundle
+                Log.d("BUNDLE", bundle.toString())
+                return fragment
+            }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?): View? {
         binding = FollowersFragmentBinding.inflate(inflater, container, false)
         adapter = UserListAdapter()
         adapter.notifyDataSetChanged()
@@ -37,15 +39,14 @@ class FollowersFragment: Fragment() {
         binding.rvFollowers.layoutManager = LinearLayoutManager(activity)
         binding.rvFollowers.adapter = adapter
 
-        val view: View = binding.root
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val username = arguments?.getString(ARG_USERNAME)
-        Log.d("USERNAMEFLWRS", username.toString())
+        Log.d("USERNAMEFOLLEWRS", username.toString())
 
         followersViewModel = ViewModelProvider(this).get(FollowersViewModel::class.java)
 

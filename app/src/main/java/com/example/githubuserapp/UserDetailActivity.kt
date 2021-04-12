@@ -34,12 +34,6 @@ class UserDetailActivity : AppCompatActivity() {
         val bundle = Bundle()
         bundle.putString("EXTRA_USERNAME", username)
 
-        var fragment = FollowersFragment()
-        fragment.arguments = bundle
-        Log.d("INI ARGUMENTS", fragment.arguments.toString())
-
-
-
         detailViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(DetailViewModel::class.java)
         detailViewModel.setDetail(username)
         detailViewModel.getDetailUser().observe(this, {
@@ -59,7 +53,7 @@ class UserDetailActivity : AppCompatActivity() {
         })
 
 
-        val sectionsPagerAdapter = SectionsPagerAdapter(this)
+        val sectionsPagerAdapter = SectionsPagerAdapter(this, username)
         val viewPager: ViewPager2 = binding.viewPager
 
         viewPager.adapter = sectionsPagerAdapter

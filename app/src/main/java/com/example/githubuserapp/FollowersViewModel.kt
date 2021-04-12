@@ -46,7 +46,7 @@ class FollowersViewModel : ViewModel() {
                         listUsers.postValue(listItems)
                     } catch (e: Exception) {
                         e.printStackTrace()
-                        Log.d("OJAN LOPE ALISA", e.message.toString())
+                        Log.d("Exception", e.message.toString())
                     }
                 }
 
