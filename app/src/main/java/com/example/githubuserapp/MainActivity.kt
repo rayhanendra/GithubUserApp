@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
             */
             override fun onQueryTextChange(username: String?): Boolean {
                 mainViewModel.setUser(username.toString())
-                showLoading(false)
+                showLoading(true)
                 return false
             }
         })
@@ -98,8 +98,10 @@ class MainActivity : AppCompatActivity() {
     private fun showLoading(state: Boolean) {
         if (state) {
             binding.progressBar.visibility = View.VISIBLE
+            binding.rvUser.visibility = View.GONE
         } else {
             binding.progressBar.visibility = View.GONE
+            binding.rvUser.visibility = View.VISIBLE
         }
     }
 
