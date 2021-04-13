@@ -40,6 +40,7 @@ class FollowingFragment : Fragment() {
         binding.rvFollowing.layoutManager = LinearLayoutManager(activity)
         binding.rvFollowing.adapter = adapter
 
+        showLoading(true)
         return binding.root
     }
 
@@ -54,10 +55,20 @@ class FollowingFragment : Fragment() {
         followingViewModel.setUser(username)
 
         followingViewModel.getUsers().observe(this, { userItems ->
+            showLoading(false)
             if (userItems !=null ) {
                 adapter.setData(userItems)
                 Log.d( "FOLLOWERS", userItems.toString())
             }
         })
+        adapter.setOnItemClickCallback(object : UserListAdapter.OnItemClickCallback {})
+    }
+
+    private fun showLoading(state: Boolean) {
+        if (state) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.GONE
+        }
     }
 }

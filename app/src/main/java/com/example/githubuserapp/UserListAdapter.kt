@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.githubuserapp.databinding.ItemUserBinding
+import org.jetbrains.anko.startActivity
 
 class UserListAdapter : RecyclerView.Adapter<UserListAdapter.UserViewHolder>() {
     private val mData = ArrayList<User>()
@@ -25,6 +26,9 @@ class UserListAdapter : RecyclerView.Adapter<UserListAdapter.UserViewHolder>() {
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         holder.bind(mData[position])
+        holder.itemView.setOnClickListener{
+            it.context.startActivity<UserDetailActivity>("EXTRA_USERNAME" to mData[position].username)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -35,7 +39,6 @@ class UserListAdapter : RecyclerView.Adapter<UserListAdapter.UserViewHolder>() {
         private val binding = ItemUserBinding.bind(itemView)
 
         fun bind (user : User){
-//            binding.tvName.text = user.name
             binding.tvUsername.text = user.username
 
             Glide.with(itemView.context)
@@ -43,7 +46,7 @@ class UserListAdapter : RecyclerView.Adapter<UserListAdapter.UserViewHolder>() {
                 .into(binding.imgProfile)
 
             itemView.setOnClickListener {
-                onItemClickCallback.onItemClicked(user.username.toString())
+                onItemClickCallback.onItemClicked(user.username)
                 Log.d("ini username", user.username.toString())
             }
         }
@@ -54,8 +57,8 @@ class UserListAdapter : RecyclerView.Adapter<UserListAdapter.UserViewHolder>() {
     }
 
     interface OnItemClickCallback {
-        fun onItemClicked(data: String){
-            Log.d("INI ON ITEM CLICKED", data)
+        fun onItemClicked(data: String?){
+            Log.d("INI ON ITEM CLICKED", data.toString())
         }
     }
 }

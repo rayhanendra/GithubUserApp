@@ -1,16 +1,17 @@
 package com.example.githubuserapp
 
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.githubuserapp.databinding.FollowersFragmentBinding
 import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.AsyncHttpResponseHandler
 import cz.msebera.android.httpclient.Header
 import org.json.JSONArray
 
 class FollowersViewModel : ViewModel() {
-
     private val listUsers = MutableLiveData<ArrayList<User>>()
 
     fun setUser(username: String?) {
@@ -65,4 +66,6 @@ class FollowersViewModel : ViewModel() {
     fun getUsers(): LiveData<ArrayList<User>> {
         return listUsers
     }
+
+
 }

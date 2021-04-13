@@ -261,13 +261,14 @@
                 android:id="@+id/tabs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?attr/colorPrimary"
-                app:tabTextColor="@android:color/white"/>
+                app:tabIndicatorColor="@color/divider"
+                android:background="@color/container"
+                app:tabTextColor="@color/new_white"/>
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/view_pager"
                 android:layout_width="match_parent"
-                android:layout_height="500dp"/>
+                android:layout_height="350dp"/>
 
         </LinearLayout>
 

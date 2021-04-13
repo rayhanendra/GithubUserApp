@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -21,6 +21,7 @@
         android:background="@color/container"
         android:paddingTop="16dp"
         android:paddingHorizontal="16dp"
+        android:listSelector="@android:color/transparent"
         tools:listitem="@layout/item_user" />
 
-</FrameLayout>
+</RelativeLayout>

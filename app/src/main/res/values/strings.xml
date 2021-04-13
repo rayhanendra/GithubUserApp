@@ -1,13 +1,17 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Github User App</string>
     <string name="followers">followers</string>
     <string name="following">following</string>
     <string name="repositories">Repositories</string>
     <string name="location">location</string>
     <string name="office">office</string>
-    <string name="search">Cari</string>
+    <string name="search">Find</string>
     <string name="id_user">username</string>
-    <string name="insert_username">Masukkan Username</string>
+    <string name="insert_username">Input Username</string>
     <string name="tab_text_followers">Followers</string>
     <string name="tab_text_following">Following</string>
+    <string name="change_language_settings">Change Language Settings</string>
+    <string name="lets_go">Lets go!</string>
+    <string name="find_your_friend">Find your friend</string>
+    <string name="octocat">octocat</string>
 </resources>

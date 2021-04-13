@@ -5,8 +5,10 @@ import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
@@ -39,6 +41,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
         val inflater = menuInflater
         inflater.inflate(R.menu.option_menu, menu)
 
@@ -54,7 +57,7 @@ class MainActivity : AppCompatActivity() {
             */
             override fun onQueryTextSubmit(username: String?): Boolean {
                 mainViewModel.setUser(username.toString())
-                showLoading(false)
+                showLoading(true)
                 return true
             }
 
@@ -63,20 +66,30 @@ class MainActivity : AppCompatActivity() {
             */
             override fun onQueryTextChange(username: String?): Boolean {
                 mainViewModel.setUser(username.toString())
-                showLoading(true)
+                showLoading(false)
                 return false
             }
         })
         return true
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_change_settings) {
+            val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
+            startActivity(mIntent)
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     private fun showRecyclerView() {
         binding.rvUser.layoutManager = LinearLayoutManager(this)
         binding.rvUser.adapter = adapter
 
+        showLoading(false)
+
         adapter.setOnItemClickCallback(object : UserListAdapter.OnItemClickCallback {
-            override fun onItemClicked(data: String) {
-                Log.d("INI DATA STRING", data)
+            override fun onItemClicked(data: String?) {
+                Log.d("INI DATA STRING", data.toString())
                 val intent = Intent (this@MainActivity, UserDetailActivity::class.java)
                 intent.putExtra("EXTRA_USERNAME", data)
                 Log.d("INI INTENT", intent.toString())
@@ -92,4 +105,6 @@ class MainActivity : AppCompatActivity() {
             binding.progressBar.visibility = View.GONE
         }
     }
+
+
 }

@@ -47,8 +47,8 @@ class UserDetailActivity : AppCompatActivity() {
                 tvFollowers.text = it.followers.toString()
                 tvFollowing.text = it.following.toString()
                 tvRepository.text = it.repository.toString()
-                tvCompany.text = it.company
-                tvLocation.text = it.location
+                tvCompany.text = it.company ?: "-"
+                tvLocation.text = it.location ?: "-"
             }
         })
 
