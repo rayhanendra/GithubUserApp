@@ -2,13 +2,11 @@ package com.example.githubuserapp
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.githubuserapp.databinding.FollowersFragmentBinding
 import com.example.githubuserapp.databinding.FollowingFragmentBinding
 
 class FollowingFragment : Fragment() {
@@ -25,7 +23,6 @@ class FollowingFragment : Fragment() {
                 val bundle = Bundle()
                 bundle.putString(ARG_USERNAME, username)
                 fragment.arguments = bundle
-                Log.d("BUNDLE", bundle.toString())
                 return fragment
             }
     }
@@ -48,7 +45,6 @@ class FollowingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val username = arguments?.getString(ARG_USERNAME)
-        Log.d("USERNAMEFLOWINGS", username.toString())
 
         followingViewModel = ViewModelProvider(this).get(FollowingViewModel::class.java)
 
@@ -58,7 +54,6 @@ class FollowingFragment : Fragment() {
             showLoading(false)
             if (userItems !=null ) {
                 adapter.setData(userItems)
-                Log.d( "FOLLOWERS", userItems.toString())
             }
         })
         adapter.setOnItemClickCallback(object : UserListAdapter.OnItemClickCallback {})

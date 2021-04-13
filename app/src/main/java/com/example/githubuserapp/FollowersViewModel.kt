@@ -1,11 +1,9 @@
 package com.example.githubuserapp
 
 import android.util.Log
-import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.githubuserapp.databinding.FollowersFragmentBinding
 import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.AsyncHttpResponseHandler
 import cz.msebera.android.httpclient.Header
@@ -15,12 +13,10 @@ class FollowersViewModel : ViewModel() {
     private val listUsers = MutableLiveData<ArrayList<User>>()
 
     fun setUser(username: String?) {
-        Log.d("INI SET user USERNAME", username.toString())
         val listItems = ArrayList<User>()
 
         val client = AsyncHttpClient()
             val url = "https://api.github.com/users/${username}/followers"
-            Log.d("INI URL", url)
             client.addHeader("Authorization", "token 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")
             client.addHeader("User-Agent", "request")
             client.get(url, object : AsyncHttpResponseHandler() {

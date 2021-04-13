@@ -1,7 +1,6 @@
 package com.example.githubuserapp
 
 import android.util.Log
-import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -32,7 +31,6 @@ class MainViewModel : ViewModel() {
                         val result = String(responseBody!!)
                         val responseObject = JSONObject(result)
                         val items = responseObject.getJSONArray("items")
-                        Log.d("ini items", items.toString())
 
                         for (i in 0 until items.length()) {
                             val item = items.getJSONObject(i)

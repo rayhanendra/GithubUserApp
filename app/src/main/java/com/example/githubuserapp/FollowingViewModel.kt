@@ -13,12 +13,10 @@ class FollowingViewModel : ViewModel() {
     private val listUsers = MutableLiveData<ArrayList<User>>()
 
     fun setUser(username: String?) {
-        Log.d("INI SET user USERNAME", username.toString())
         val listItems = ArrayList<User>()
 
         val client = AsyncHttpClient()
         val url = "https://api.github.com/users/${username}/following"
-        Log.d("INI URL", url)
         client.addHeader("Authorization", "token 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")
         client.addHeader("User-Agent", "request")
         client.get(url, object : AsyncHttpResponseHandler() {

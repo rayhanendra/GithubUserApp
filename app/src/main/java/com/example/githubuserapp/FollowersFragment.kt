@@ -1,7 +1,6 @@
 package com.example.githubuserapp
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +23,6 @@ class FollowersFragment: Fragment() {
                 val bundle = Bundle()
                 bundle.putString(ARG_USERNAME, username)
                 fragment.arguments = bundle
-                Log.d("BUNDLE", bundle.toString())
                 return fragment
             }
     }
@@ -47,7 +45,6 @@ class FollowersFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val username = arguments?.getString(ARG_USERNAME)
-        Log.d("USERNAMEFOLLEWRS", username.toString())
 
         followersViewModel = ViewModelProvider(this).get(FollowersViewModel::class.java)
 
@@ -57,7 +54,6 @@ class FollowersFragment: Fragment() {
             showLoading(false)
             if (userItems != null) {
                 adapter.setData(userItems)
-                Log.d("FOLLOWERS", userItems.toString())
             }
         })
     }

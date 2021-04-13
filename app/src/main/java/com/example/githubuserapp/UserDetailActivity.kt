@@ -2,7 +2,6 @@ package com.example.githubuserapp
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
@@ -29,7 +28,6 @@ class UserDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val username = intent.getStringExtra("EXTRA_USERNAME")
-        Log.d("ini user", username.toString())
 
         val bundle = Bundle()
         bundle.putString("EXTRA_USERNAME", username)

@@ -1,6 +1,5 @@
 package com.example.githubuserapp
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,7 +46,6 @@ class UserListAdapter : RecyclerView.Adapter<UserListAdapter.UserViewHolder>() {
 
             itemView.setOnClickListener {
                 onItemClickCallback.onItemClicked(user.username)
-                Log.d("ini username", user.username.toString())
             }
         }
     }
@@ -58,7 +56,6 @@ class UserListAdapter : RecyclerView.Adapter<UserListAdapter.UserViewHolder>() {
 
     interface OnItemClickCallback {
         fun onItemClicked(data: String?){
-            Log.d("INI ON ITEM CLICKED", data.toString())
         }
     }
 }

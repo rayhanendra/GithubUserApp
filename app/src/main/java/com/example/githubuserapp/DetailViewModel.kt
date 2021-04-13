@@ -16,7 +16,6 @@ class DetailViewModel : ViewModel() {
 
     fun setDetail(username: String?) {
 
-        Log.d("INI SET DETAIL USERNAME", username.toString())
         val client = AsyncHttpClient()
             val url = "https://api.github.com/users/${username}"
             client.addHeader("Authorization", "token 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")
@@ -31,7 +30,6 @@ class DetailViewModel : ViewModel() {
                         //parsing json
                         val result = String(responseBody!!)
                         val responseObject = JSONObject(result)
-                        Log.d("INI RESPONSE OBJECT", responseObject.toString())
 
                         val name = responseObject.getString("name")
                         val username =responseObject.getString("login")
@@ -73,7 +71,6 @@ class DetailViewModel : ViewModel() {
     }
 
     internal fun getDetailUser(): LiveData<User> {
-        Log.d("INI GETDETAILUSER", detailUser.toString())
         return detailUser
     }
 

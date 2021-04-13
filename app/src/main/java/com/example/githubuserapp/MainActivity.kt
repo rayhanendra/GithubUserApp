@@ -6,7 +6,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -89,10 +88,8 @@ class MainActivity : AppCompatActivity() {
 
         adapter.setOnItemClickCallback(object : UserListAdapter.OnItemClickCallback {
             override fun onItemClicked(data: String?) {
-                Log.d("INI DATA STRING", data.toString())
                 val intent = Intent (this@MainActivity, UserDetailActivity::class.java)
                 intent.putExtra("EXTRA_USERNAME", data)
-                Log.d("INI INTENT", intent.toString())
                 startActivity(intent)
             }
         })
