@@ -104,6 +104,4 @@ class MainActivity : AppCompatActivity() {
             binding.rvUser.visibility = View.VISIBLE
         }
     }
-
-
 }

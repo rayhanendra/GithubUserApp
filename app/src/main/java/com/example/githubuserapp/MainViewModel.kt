@@ -1,6 +1,7 @@
 package com.example.githubuserapp
 
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -64,4 +65,5 @@ class MainViewModel : ViewModel() {
     fun getUsers(): LiveData<ArrayList<User>> {
         return listUsers
     }
+
 }
