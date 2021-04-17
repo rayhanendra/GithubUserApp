@@ -1,11 +1,14 @@
-package com.example.githubuserapp
+package com.example.githubuserapp.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.githubuserapp.R
+import com.example.githubuserapp.User
 import com.example.githubuserapp.databinding.ItemUserBinding
+import com.example.githubuserapp.userdetail.UserDetailActivity
 import org.jetbrains.anko.startActivity
 
 class UserListAdapter : RecyclerView.Adapter<UserListAdapter.UserViewHolder>() {

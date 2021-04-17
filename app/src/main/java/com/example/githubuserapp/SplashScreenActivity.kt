@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.Window
 import android.view.WindowManager
+import com.example.githubuserapp.main.MainActivity
 
 class SplashScreenActivity : AppCompatActivity() {
     private val SPLASH_TIME_OUT: Long = 3000

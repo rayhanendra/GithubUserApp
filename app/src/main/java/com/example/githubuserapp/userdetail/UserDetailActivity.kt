@@ -1,12 +1,15 @@
-package com.example.githubuserapp
+package com.example.githubuserapp.userdetail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.example.githubuserapp.R
 import com.example.githubuserapp.databinding.ActivityUserDetailBinding
+import com.example.githubuserapp.userdetail.tabs.SectionsPagerAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -32,7 +35,8 @@ class UserDetailActivity : AppCompatActivity() {
         val bundle = Bundle()
         bundle.putString("EXTRA_USERNAME", username)
 
-        detailViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(DetailViewModel::class.java)
+        detailViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(
+            DetailViewModel::class.java)
         detailViewModel.setDetail(username)
         detailViewModel.getDetailUser().observe(this, {
 
@@ -63,4 +67,13 @@ class UserDetailActivity : AppCompatActivity() {
 
         supportActionBar?.elevation = 0f
     }
+
+    private fun setStateFavorite(favoriteState: Boolean) {
+        if (favoriteState) {
+            binding.iconFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+            Toast.makeText(this, "Removed from favorite", Toast.LENGTH_SHORT).show()}
+        else {
+            binding.iconFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
+            Toast.makeText(this, "Added to favorite", Toast.LENGTH_SHORT).show()}
+        }
 }

@@ -10,6 +10,12 @@
         app:showAsAction="collapseActionView|ifRoom" />
 
     <item
+        android:id="@+id/favorite"
+        android:icon="@drawable/ic_baseline_favorite_24"
+        android:title="@string/change_language_settings"
+        app:showAsAction="collapseActionView|ifRoom"/>
+
+    <item
         android:id="@+id/action_change_settings"
         android:title="@string/change_language_settings"
         app:showAsAction="never"/>

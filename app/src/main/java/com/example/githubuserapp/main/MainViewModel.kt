@@ -1,23 +1,24 @@
-package com.example.githubuserapp
+package com.example.githubuserapp.main
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.githubuserapp.User
 import com.loopj.android.http.AsyncHttpClient
 import com.loopj.android.http.AsyncHttpResponseHandler
 import cz.msebera.android.httpclient.Header
 import org.json.JSONObject
-import java.lang.Exception
 
-class DetailViewModel : ViewModel() {
+class MainViewModel : ViewModel() {
 
-    private val detailUser = MutableLiveData<User>()
+    private val listUsers = MutableLiveData<ArrayList<User>>()
 
-    fun setDetail(username: String?) {
+    fun setUser(username: String) {
+        val listItems = ArrayList<User>()
 
         val client = AsyncHttpClient()
-            val url = "https://api.github.com/users/${username}"
+            val url = "https://api.github.com/search/users?q=${username}"
             client.addHeader("Authorization", "token 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")
             client.addHeader("User-Agent", "request")
             client.get(url, object : AsyncHttpResponseHandler() {
@@ -30,33 +31,23 @@ class DetailViewModel : ViewModel() {
                         //parsing json
                         val result = String(responseBody!!)
                         val responseObject = JSONObject(result)
+                        val items = responseObject.getJSONArray("items")
 
-                        val name = responseObject.getString("name")
-                        val username =responseObject.getString("login")
-                        val avatar = responseObject.getString("avatar_url")
-                        val company = responseObject.getString("company")
-                        val location = responseObject.getString("location")
-                        val followers = responseObject.getInt("followers")
-                        val following = responseObject.getInt("following")
-                        val repository = responseObject.getInt("public_repos")
-
-                        val user = User()
-                        user.name = name
-                        user.username = username
-                        user.avatar = avatar
-                        user.company = company
-                        user.location = location
-                        user.followers = followers
-                        user.following = following
-                        user.repository = repository
-
-                        detailUser.postValue(user)
-
+                        for (i in 0 until items.length()) {
+                            val item = items.getJSONObject(i)
+                            val username = item.getString("login")
+                            val avatar = item.getString("avatar_url")
+                            val user = User()
+                            user.username = username
+                            user.avatar = avatar
+                            listItems.add(user)
+                        }
+                        //set data ke adapter
+                        listUsers.postValue(listItems)
                     } catch (e: Exception) {
                         e.printStackTrace()
                         Log.d("Exception", e.message.toString())
                     }
-
                 }
 
                 override fun onFailure(
@@ -66,12 +57,13 @@ class DetailViewModel : ViewModel() {
                     error: Throwable?
                 ) {
                     Log.d("onFailure", error?.message.toString())
+
                 }
             })
     }
 
-    internal fun getDetailUser(): LiveData<User> {
-        return detailUser
+    fun getUsers(): LiveData<ArrayList<User>> {
+        return listUsers
     }
 
 }

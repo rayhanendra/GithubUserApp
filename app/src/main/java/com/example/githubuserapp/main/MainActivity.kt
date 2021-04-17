@@ -1,4 +1,4 @@
-package com.example.githubuserapp
+package com.example.githubuserapp.main
 
 import android.app.SearchManager
 import android.content.Context
@@ -12,7 +12,11 @@ import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.githubuserapp.R
+import com.example.githubuserapp.UserFavoriteActivity
+import com.example.githubuserapp.adapter.UserListAdapter
 import com.example.githubuserapp.databinding.ActivityMainBinding
+import com.example.githubuserapp.userdetail.UserDetailActivity
 
 class MainActivity : AppCompatActivity() {
     private lateinit var adapter: UserListAdapter
@@ -29,7 +33,8 @@ class MainActivity : AppCompatActivity() {
 
         showRecyclerView()
 
-        mainViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(MainViewModel::class.java)
+        mainViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(
+            MainViewModel::class.java)
 
         mainViewModel.getUsers().observe(this, { userItems ->
             if (userItems !=null){
@@ -73,9 +78,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_change_settings) {
-            val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
-            startActivity(mIntent)
+        when (item.itemId) {
+            R.id.action_change_settings -> {
+                val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
+                startActivity(mIntent)
+            }
+            R.id.favorite -> {
+                val mIntent = Intent(this, UserFavoriteActivity::class.java)
+                startActivity(mIntent)
+            }
         }
         return super.onOptionsItemSelected(item)
     }
