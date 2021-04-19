@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GithubUserApp">
-        <activity android:name=".UserFavoriteActivity" />
+        <activity android:name=".userfavorite.UserFavoriteViewModel"></activity>
+        <activity android:name=".userfavorite.UserFavoriteActivity" />
         <activity
             android:name=".SplashScreenActivity"
             android:theme="@style/NoActionBar">

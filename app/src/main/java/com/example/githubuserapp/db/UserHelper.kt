@@ -10,7 +10,7 @@ import com.example.githubuserapp.db.UserContract.UserColumns.Companion.TABLE_NAM
 
 class UserHelper(context: Context) {
 
-    private var dataBaseHelper: DatabaseHelper = DatabaseHelper(context)
+    private var databaseHelper: DatabaseHelper = DatabaseHelper(context)
     private lateinit var database: SQLiteDatabase
 
     companion object {
@@ -25,11 +25,11 @@ class UserHelper(context: Context) {
 
     @Throws(SQLException::class)
     fun open() {
-        database = dataBaseHelper.writableDatabase
+        database = databaseHelper.writableDatabase
     }
 
     fun close() {
-        dataBaseHelper.close()
+        databaseHelper.close()
         if (database.isOpen)
             database.close()
     }

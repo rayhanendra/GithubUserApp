@@ -13,7 +13,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubuserapp.R
-import com.example.githubuserapp.UserFavoriteActivity
+import com.example.githubuserapp.userfavorite.UserFavoriteActivity
 import com.example.githubuserapp.adapter.UserListAdapter
 import com.example.githubuserapp.databinding.ActivityMainBinding
 import com.example.githubuserapp.userdetail.UserDetailActivity

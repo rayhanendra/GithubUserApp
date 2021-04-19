@@ -6,7 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.githubuserapp.R
-import com.example.githubuserapp.User
+import com.example.githubuserapp.data.User
+import com.example.githubuserapp.data.UserFavorite
 import com.example.githubuserapp.databinding.ItemUserBinding
 import com.example.githubuserapp.userdetail.UserDetailActivity
 import org.jetbrains.anko.startActivity
@@ -61,6 +62,22 @@ class UserListAdapter : RecyclerView.Adapter<UserListAdapter.UserViewHolder>() {
         fun onItemClicked(data: String?){
         }
     }
+
+    var listFavorite = ArrayList<User>()
+        set(listFavorite) {
+            if (listFavorite.size > 0) {
+                this.listFavorite.clear()
+            }
+            this.listFavorite.addAll(listFavorite)
+            notifyDataSetChanged()
+        }
+
+    private lateinit var deleteListener: ((User, Int) -> Unit)
+
+    fun setOnDeleteListener(listener: (User, Int) -> Unit) {
+        deleteListener = listener
+    }
+
 }
 
 
