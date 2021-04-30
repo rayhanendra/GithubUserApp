@@ -10,7 +10,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GithubUserApp">
-        <activity android:name=".userfavorite.UserFavoriteViewModel"></activity>
+        <provider
+            android:name=".userfavorite.UserFavoriteProvider"
+            android:authorities="com.example.githubuserapp"
+            android:enabled="true"
+            android:exported="true"
+            android:readPermission="com.example.githubuserapp.READ_DATABASE"
+            android:writePermission="com.example.githubuserapp.WRITE_DATABASE"/>
+
         <activity android:name=".userfavorite.UserFavoriteActivity" />
         <activity
             android:name=".SplashScreenActivity"

@@ -1,24 +1,23 @@
 package com.example.githubuserapp.userdetail
 
 import android.content.ContentValues
+import android.content.LocusId
+import android.database.Cursor
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.example.githubuserapp.R
 import com.example.githubuserapp.data.User
+import com.example.githubuserapp.data.UserFavorite
 import com.example.githubuserapp.databinding.ActivityUserDetailBinding
-import com.example.githubuserapp.db.UserContract.UserColumns.Companion.COLUMN_NAME_AVATAR_URL
-import com.example.githubuserapp.db.UserContract.UserColumns.Companion.COLUMN_NAME_COMPANY
-import com.example.githubuserapp.db.UserContract.UserColumns.Companion.COLUMN_NAME_FAVORITE
-import com.example.githubuserapp.db.UserContract.UserColumns.Companion.COLUMN_NAME_LOCATION
-import com.example.githubuserapp.db.UserContract.UserColumns.Companion.COLUMN_NAME_NAME
-import com.example.githubuserapp.db.UserContract.UserColumns.Companion.COLUMN_NAME_REPOSITORY
-import com.example.githubuserapp.db.UserContract.UserColumns.Companion.COLUMN_NAME_USERNAME
+import com.example.githubuserapp.db.UserContract
 import com.example.githubuserapp.db.UserContract.UserColumns.Companion.CONTENT_URI
 import com.example.githubuserapp.db.UserHelper
 import com.example.githubuserapp.helper.MappingFavoriteHelper
@@ -30,12 +29,10 @@ class UserDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityUserDetailBinding
     private lateinit var userDetailViewModel : UserDetailViewModel
-    private var stateFavorite = false
-    private var user: User?= null
-    private lateinit var uriWithId: Uri
-    private var position: Int = 0
     private lateinit var userHelper: UserHelper
-    private lateinit var imgProfile: String
+    private lateinit var uriWithId: Uri
+    private var stateFavorite = false
+    private var user = UserFavorite()
 
     companion object {
         @StringRes
@@ -43,8 +40,6 @@ class UserDetailActivity : AppCompatActivity() {
             R.string.tab_text_followers,
             R.string.tab_text_following,
         )
-        const val favoriteData = "FAVORITE_DATA"
-        const val positionData = "POSITION_DATA"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,18 +52,17 @@ class UserDetailActivity : AppCompatActivity() {
         bundle.putString("EXTRA_USERNAME", username)
 
         userDetailViewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(UserDetailViewModel::class.java)
+        userDetailViewModel = UserDetailViewModel()
         setUserData(username)
 
-        checkDatabaseFavorite()
+        setTab(username)
 
-        setStateFavorite(stateFavorite)
         binding.btnFavorite.setOnClickListener {
-            stateFavorite =! stateFavorite
-            setStateFavorite(stateFavorite)
-            toggleFavorite()
+            addFavorite(stateFavorite)
         }
 
-        setTab(username)
+        userHelper = UserHelper.getInstance(applicationContext)
+        userHelper.open()
 
         supportActionBar?.elevation = 0f
     }
@@ -89,76 +83,52 @@ class UserDetailActivity : AppCompatActivity() {
                 tvCompany.text = it.company ?: "-"
                 tvLocation.text = it.location ?: "-"
             }
+            checkFavorite()
+            user.id = it.id
+            user.username = it.username
+            user.avatar = it.avatar
         })
     }
 
-    private fun checkDatabaseFavorite() {
-        uriWithId = Uri.parse(CONTENT_URI.toString() + "/" + user?.id)
+    private fun checkFavorite() {
+        Toast.makeText(this, "CHECKKKKK", Toast.LENGTH_SHORT).show()
+        uriWithId = Uri.parse(CONTENT_URI.toString() + "/" + user.id)
         val cursor = contentResolver.query(uriWithId, null, null, null, null)
-        val myFavorites = MappingFavoriteHelper.mapCursorToArrayList(cursor)
-        for (data in myFavorites) {
-            if (user?.id == data.id) {
+        val favoriteMap = MappingFavoriteHelper.mapCursorToArrayList(cursor)
+        for (data in favoriteMap) {
+            if (user.id == data.id) {
+                Log.d("ini user id", user.id.toString())
+                binding.iconFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
                 stateFavorite = true
-                setFavoriteData()
             }
         }
     }
 
-    private fun setFavoriteData() {
-        user = intent.getParcelableExtra(favoriteData)
-
-        if (user != null) {
-            position = intent.getIntExtra(positionData, 0)
-
-            uriWithId = Uri.parse(CONTENT_URI.toString() + "/" + user?.username)
-            val cursor = contentResolver.query(uriWithId, null, null, null, null)
-            if (cursor != null && cursor.moveToFirst()) {
-                user = MappingFavoriteHelper.mapCursorToObject(cursor)
-                cursor.close()
+    private fun addFavorite(favoriteState: Boolean) {
+            if(favoriteState) {
+                setStateFavorite()
+                stateFavorite = false
+                userHelper.deleteById(user.id.toString())
+            }   else {
+                setStateFavorite()
+                val values = ContentValues()
+                values.put(UserContract.UserColumns.COLUMN_NAME_ID, user.id)
+                values.put(UserContract.UserColumns.COLUMN_NAME_USERNAME, user.username)
+                values.put(UserContract.UserColumns.COLUMN_NAME_AVATAR_URL, user.avatar)
+                stateFavorite = true
+                contentResolver.insert(CONTENT_URI, values)
             }
-        } else {
-            user = User()
-        }
     }
 
-
-    private fun toggleFavorite(){
-        if(stateFavorite){
-            userHelper.deleteById(user?.username.toString())
-            stateFavorite = false
-        } else {
-            val username = binding.tvUsername.text.toString()
-            val avatar = imgProfile
-            val name = binding.tvName.text.toString()
-            val company = binding.tvCompany.text.toString()
-            val location = binding.tvLocation.text.toString()
-            val repository = binding.tvRepository.text.toString()
-            val fav = "1"
-
-            val values = ContentValues()
-            values.put(COLUMN_NAME_USERNAME, username)
-            values.put(COLUMN_NAME_AVATAR_URL, avatar)
-            values.put(COLUMN_NAME_NAME, name)
-            values.put(COLUMN_NAME_REPOSITORY, repository)
-            values.put(COLUMN_NAME_COMPANY, company)
-            values.put(COLUMN_NAME_LOCATION, location)
-            values.put(COLUMN_NAME_FAVORITE, fav)
-
-            contentResolver.insert(CONTENT_URI, values)
-            stateFavorite = true
-        }
+    private fun setStateFavorite() {
+            if (stateFavorite) {
+                binding.iconFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+                Toast.makeText(this, "Removed from favorite", Toast.LENGTH_SHORT).show()
+            } else {
+                binding.iconFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
+                Toast.makeText(this, "Added to favorite ", Toast.LENGTH_SHORT).show()
+            }
     }
-
-    private fun setStateFavorite(favoriteState: Boolean) {
-        if (favoriteState) {
-            binding.iconFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
-            Toast.makeText(this, "Added to favorite", Toast.LENGTH_SHORT).show()
-            }
-        else {
-            binding.iconFavorite.setImageResource(R.drawable.ic_baseline_favorite_border_24)
-            Toast.makeText(this, "Removed from favorite", Toast.LENGTH_SHORT).show()
-            }
-        }
 
     private fun setTab(username: String?) {
         val sectionsPagerAdapter = SectionsPagerAdapter(this, username)

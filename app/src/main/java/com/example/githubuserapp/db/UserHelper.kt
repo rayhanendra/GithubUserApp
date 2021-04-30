@@ -5,7 +5,7 @@ import android.content.Context
 import android.database.Cursor
 import android.database.SQLException
 import android.database.sqlite.SQLiteDatabase
-import android.provider.BaseColumns._ID
+import com.example.githubuserapp.db.UserContract.UserColumns.Companion.COLUMN_NAME_ID
 import com.example.githubuserapp.db.UserContract.UserColumns.Companion.TABLE_NAME
 
 class UserHelper(context: Context) {
@@ -21,6 +21,10 @@ class UserHelper(context: Context) {
                 INSTANCE ?: synchronized(this) {
                     INSTANCE ?: UserHelper(context)
                 }
+    }
+
+    init {
+        databaseHelper = DatabaseHelper(context)
     }
 
     @Throws(SQLException::class)
@@ -42,14 +46,14 @@ class UserHelper(context: Context) {
                 null,
                 null,
                 null,
-                "$_ID ASC")
+                "$COLUMN_NAME_ID ASC")
     }
 
     fun queryById(id: String): Cursor {
         return database.query(
                 DATABASE_TABLE,
                 null,
-                "$_ID = ?",
+                "$COLUMN_NAME_ID = ?",
                 arrayOf(id),
                 null,
                 null,
@@ -62,10 +66,10 @@ class UserHelper(context: Context) {
     }
 
     fun update(id: String, values: ContentValues?): Int {
-        return database.update(DATABASE_TABLE, values, "$_ID = ?", arrayOf(id))
+        return database.update(DATABASE_TABLE, values, "$COLUMN_NAME_ID = ?", arrayOf(id))
     }
 
     fun deleteById(id: String): Int {
-        return database.delete(DATABASE_TABLE, "$_ID = '$id'", null)
+        return database.delete(DATABASE_TABLE, "$COLUMN_NAME_ID = '$id'", null)
     }
 }

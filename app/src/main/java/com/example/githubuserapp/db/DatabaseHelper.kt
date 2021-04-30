@@ -13,13 +13,8 @@ internal class  DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DAT
 
         private const val SQL_CREATE_TABLE_NOTE = "CREATE TABLE $TABLE_NAME" +
                 " (${UserContract.UserColumns.COLUMN_NAME_ID} INTEGER PRIMARY KEY AUTOINCREMENT," +
-                " (${UserContract.UserColumns.COLUMN_NAME_USERNAME} TEXT NOT NULL," +
-                " ${UserContract.UserColumns.COLUMN_NAME_AVATAR_URL} TEXT NOT NULL," +
-                " ${UserContract.UserColumns.COLUMN_NAME_NAME} TEXT NOT NULL," +
-                " ${UserContract.UserColumns.COLUMN_NAME_COMPANY} TEXT NOT NULL," +
-                " ${UserContract.UserColumns.COLUMN_NAME_LOCATION} TEXT NOT NULL)" +
-                " ${UserContract.UserColumns.COLUMN_NAME_REPOSITORY} TEXT NOT NULL," +
-                " ${UserContract.UserColumns.COLUMN_NAME_FAVORITE} TEXT NOT NULL"
+                " ${UserContract.UserColumns.COLUMN_NAME_USERNAME} TEXT NOT NULL," +
+                " ${UserContract.UserColumns.COLUMN_NAME_AVATAR_URL} TEXT NOT NULL)"
     }
 
     override fun onCreate(db: SQLiteDatabase) {

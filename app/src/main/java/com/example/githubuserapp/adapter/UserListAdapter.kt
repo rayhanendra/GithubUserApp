@@ -14,6 +14,7 @@ import org.jetbrains.anko.startActivity
 
 class UserListAdapter : RecyclerView.Adapter<UserListAdapter.UserViewHolder>() {
     private val mData = ArrayList<User>()
+
     private lateinit var onItemClickCallback: OnItemClickCallback
 
     fun setData(items: ArrayList<User>) {
@@ -62,22 +63,6 @@ class UserListAdapter : RecyclerView.Adapter<UserListAdapter.UserViewHolder>() {
         fun onItemClicked(data: String?){
         }
     }
-
-    var listFavorite = ArrayList<User>()
-        set(listFavorite) {
-            if (listFavorite.size > 0) {
-                this.listFavorite.clear()
-            }
-            this.listFavorite.addAll(listFavorite)
-            notifyDataSetChanged()
-        }
-
-    private lateinit var deleteListener: ((User, Int) -> Unit)
-
-    fun setOnDeleteListener(listener: (User, Int) -> Unit) {
-        deleteListener = listener
-    }
-
 }
 
 

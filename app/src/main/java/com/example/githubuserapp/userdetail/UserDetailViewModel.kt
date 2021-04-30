@@ -31,7 +31,7 @@ class UserDetailViewModel : ViewModel() {
                         //parsing json
                         val result = String(responseBody!!)
                         val responseObject = JSONObject(result)
-
+                        val id = responseObject.getInt("id")
                         val name = responseObject.getString("name")
                         val username =responseObject.getString("login")
                         val avatar = responseObject.getString("avatar_url")
@@ -42,6 +42,7 @@ class UserDetailViewModel : ViewModel() {
                         val repository = responseObject.getInt("public_repos")
 
                         val user = User()
+                        user.id = id
                         user.name = name
                         user.username = username
                         user.avatar = avatar
