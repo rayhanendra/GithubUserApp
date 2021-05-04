@@ -7,6 +7,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
@@ -83,10 +84,10 @@ class UserDetailActivity : AppCompatActivity() {
                 tvCompany.text = it.company ?: "-"
                 tvLocation.text = it.location ?: "-"
             }
-            checkFavorite()
             user.id = it.id
             user.username = it.username
             user.avatar = it.avatar
+            checkFavorite()
         })
     }
 
@@ -94,10 +95,13 @@ class UserDetailActivity : AppCompatActivity() {
         Toast.makeText(this, "CHECKKKKK", Toast.LENGTH_SHORT).show()
         uriWithId = Uri.parse(CONTENT_URI.toString() + "/" + user.id)
         val cursor = contentResolver.query(uriWithId, null, null, null, null)
+        Log.d("ini user id", uriWithId.toString())
+        Log.d("ini cursor", cursor.toString())
         val favoriteMap = MappingFavoriteHelper.mapCursorToArrayList(cursor)
+        Log.d("INI favoriteMap", favoriteMap.toString())
+
         for (data in favoriteMap) {
             if (user.id == data.id) {
-                Log.d("ini user id", user.id.toString())
                 binding.iconFavorite.setImageResource(R.drawable.ic_baseline_favorite_24)
                 stateFavorite = true
             }
@@ -141,4 +145,5 @@ class UserDetailActivity : AppCompatActivity() {
             tab.text = resources.getString(TAB_TITLES[position])
         }.attach()
     }
+
 }

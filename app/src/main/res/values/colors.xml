@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="purple_icon">#8B6CCF</color>
+    <color name="trans">#80000000</color>
 
     <color name="new_white">#FBFBFC</color>
     <color name="dark_white">#9194A0</color>

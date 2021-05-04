@@ -13,6 +13,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubuserapp.R
+import com.example.githubuserapp.SettingsActivity
 import com.example.githubuserapp.userfavorite.UserFavoriteActivity
 import com.example.githubuserapp.adapter.UserListAdapter
 import com.example.githubuserapp.databinding.ActivityMainBinding
@@ -80,9 +81,10 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_change_settings -> {
-                val mIntent = Intent(Settings.ACTION_LOCALE_SETTINGS)
+                val mIntent = Intent(this, SettingsActivity::class.java)
                 startActivity(mIntent)
             }
+
             R.id.favorite -> {
                 val mIntent = Intent(this, UserFavoriteActivity::class.java)
                 startActivity(mIntent)

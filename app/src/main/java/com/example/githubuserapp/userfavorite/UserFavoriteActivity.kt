@@ -1,22 +1,18 @@
 package com.example.githubuserapp.userfavorite
 
-import android.content.Intent
+
 import android.database.ContentObserver
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.HandlerThread
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.githubuserapp.adapter.UserListAdapter
-import com.example.githubuserapp.data.User
 import com.example.githubuserapp.data.UserFavorite
 import com.example.githubuserapp.databinding.ActivityUserFavoriteBinding
 import com.example.githubuserapp.db.UserContract.UserColumns.Companion.CONTENT_URI
 import com.example.githubuserapp.db.UserHelper
 import com.example.githubuserapp.helper.MappingFavoriteHelper
-import com.example.githubuserapp.userdetail.UserDetailActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
@@ -65,6 +61,7 @@ class UserFavoriteActivity : AppCompatActivity() {
 
     private fun loadUserAsync() {
         GlobalScope.launch(Dispatchers.Main) {
+            showLoading(true)
             val userHelper = UserHelper.getInstance(applicationContext)
             userHelper.open()
             val deferredFav = async(Dispatchers.IO) {
