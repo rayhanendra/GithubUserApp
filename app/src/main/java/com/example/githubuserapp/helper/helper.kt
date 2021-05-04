@@ -1,7 +1,6 @@
 package com.example.githubuserapp.helper
 
 import android.database.Cursor
-import com.example.githubuserapp.data.User
 import com.example.githubuserapp.data.UserFavorite
 import com.example.githubuserapp.db.UserContract
 

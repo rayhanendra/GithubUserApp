@@ -1,21 +1,15 @@
 package com.example.githubuserapp.userdetail
 
 import android.content.ContentValues
-import android.content.LocusId
-import android.database.Cursor
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.annotation.StringRes
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.example.githubuserapp.R
-import com.example.githubuserapp.data.User
 import com.example.githubuserapp.data.UserFavorite
 import com.example.githubuserapp.databinding.ActivityUserDetailBinding
 import com.example.githubuserapp.db.UserContract
@@ -92,13 +86,9 @@ class UserDetailActivity : AppCompatActivity() {
     }
 
     private fun checkFavorite() {
-        Toast.makeText(this, "CHECKKKKK", Toast.LENGTH_SHORT).show()
         uriWithId = Uri.parse(CONTENT_URI.toString() + "/" + user.id)
         val cursor = contentResolver.query(uriWithId, null, null, null, null)
-        Log.d("ini user id", uriWithId.toString())
-        Log.d("ini cursor", cursor.toString())
         val favoriteMap = MappingFavoriteHelper.mapCursorToArrayList(cursor)
-        Log.d("INI favoriteMap", favoriteMap.toString())
 
         for (data in favoriteMap) {
             if (user.id == data.id) {
@@ -145,5 +135,4 @@ class UserDetailActivity : AppCompatActivity() {
             tab.text = resources.getString(TAB_TITLES[position])
         }.attach()
     }
-
 }

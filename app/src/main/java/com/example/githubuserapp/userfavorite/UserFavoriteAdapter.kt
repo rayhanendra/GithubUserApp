@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.githubuserapp.R
-import com.example.githubuserapp.adapter.UserListAdapter
 import com.example.githubuserapp.data.UserFavorite
 import com.example.githubuserapp.databinding.ItemUserBinding
 import com.example.githubuserapp.userdetail.UserDetailActivity
